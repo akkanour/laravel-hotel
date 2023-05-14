@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('gestion-reservation');
+    return view('gestion-utilisateur');
 });
 
 Route::middleware([

@@ -8,6 +8,7 @@
     Accueil
 @endsection
 @section('content-dashboard')
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
