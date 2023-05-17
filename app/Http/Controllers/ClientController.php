@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
 
-class Chambre extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $client = Client::all();
+        return response()->json($client);
     }
 
     /**

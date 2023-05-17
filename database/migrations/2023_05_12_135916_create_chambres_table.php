@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('chambres', function (Blueprint $table) {
             $table->id();
             $table->foreignId("type_chambre_id")->constrained("type_chambres");
-            $table->float("prix",2);
+            $table->float("prix");
             $table->integer("numChambre");
             $table->boolean("dispo");
             $table->timestamps();

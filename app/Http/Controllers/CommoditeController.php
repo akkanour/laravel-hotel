@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commodite;
 use Illuminate\Http\Request;
 
-class TypeChambre extends Controller
+class CommoditeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $commodite = Commodite::all();
+        return response()->json($commodite);
     }
 
     /**
