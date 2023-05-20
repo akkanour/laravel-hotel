@@ -13,7 +13,8 @@ class ClientController extends Controller
     public function index()
     {
         $client = Client::all();
-        return response()->json($client);
+        //return response()->json($client);
+        return view('gestion-client')->with('clients',$client);
     }
 
     /**
@@ -29,7 +30,16 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+            $client = new Client();
+            $client->nomClient = $request->input('nomClient');
+            $client->prenomClient = $request->input('prenomClient');
+            $client->gsm = $request->input('gsm');
+            $client->nationnalite = $request->input('nationnalite');
+            $client->cin = $request->input('cin');
+            $client->numPasseport = $request->input('numPasseport');
+            $client->save();
+            return redirect()->back()->with('success', 'Data added successfully');
     }
 
     /**
@@ -37,7 +47,8 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $client = Client::find($id);
+        return response()->json($client);
     }
 
     /**
@@ -53,7 +64,15 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $client = Client::find($id);
+        $client->nomClient = $request->input('nomClient');
+        $client->prenomClient = $request->input('prenomClient');
+        $client->gsm = $request->input('gsm');
+        $client->nationnalite = $request->input('nationnalite');
+        $client->cin = $request->input('cin');
+        $client->numPasseport = $request->input('numPasseport');
+        $client->save();
+        return redirect()->back()->with('success', 'Data updated successfully');
     }
 
     /**
@@ -61,6 +80,11 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $client = Client::find($id);
+        if($client){
+            $client->delete();
+            return redirect()->back()->with('success', 'Data deleted successfully');
+        }
+        return redirect()->back()->with('error', 'Data not found');
     }
 }

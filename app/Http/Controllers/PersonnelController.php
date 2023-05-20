@@ -14,7 +14,7 @@ class PersonnelController extends Controller
     {
         $personnel = Personnel::all();
         //return response()->json($personnel);
-        return view('gestion-personnel')->with('personnel',$personnel;
+        return view('gestion-personnel')->with('personnels',$personnel);
     }
 
     /**
@@ -83,6 +83,6 @@ class PersonnelController extends Controller
         $personnel->delete();
         return redirect()->back()->with('success', 'Data deleted successfully');
     }
-    return response()->json(['error' => 'Data not found']
+    return response()->json(['error' => 'Data not found']);
     }
 }

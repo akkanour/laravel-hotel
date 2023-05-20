@@ -5,9 +5,10 @@
 @section('css')
 @endsection
 @section('title_2')
-    Dashboard
+    Accueil
 @endsection
-@section('content-gestion-employe')
+@section('content-dashboard')
+
     <!-- Main content -->
     <div class="container-fluid">
         <div class="row">
@@ -16,34 +17,49 @@
                     <div class="card-header">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
-                            Ajouter chambre
+                            Ajouter Personnel
                         </button>
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une chambre</h5>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un personnel</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form action="{{ route('chambre_add')}}" method="POST">
+                                    <form action="{{ route('personnel_add')}}" method="POST">
                                         <div class="modal-body">
                                             {!! csrf_field() !!}
                                             <div class="mb-3">
-                                                <label for="numChambre" class="form-label">Numéo Chambre</label>
-                                                <input type="text" class="form-control" id="numChambre" name="numChambre">
+                                                <label for="nom" class="form-label">Nom</label>
+                                                <input type="text" class="form-control" id="nom" name="nom">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="dispo" class="form-label">Disponibilité</label>
-                                                <input type="text" class="form-control" id="dispo" name="dispo">
+                                                <label for="prenom" class="form-label">Prénom</label>
+                                                <input type="text" class="form-control" id="prenom" name="prenom">
                                             </div>
                                             <div class="mb-3">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="prix" class="form-label">Prix</label>
-                                                <input type="text" class="form-control" id="prix" name="prix">
+                                                <label for="numTel" class="form-label">Numéro</label>
+                                                <input type="text" class="form-control" id="numTel" name="numTel">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="adresse" class="form-label">Adresse</label>
+                                                <input type="text" class="form-control" id="adresse" name="adresse">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="typePoste" class="form-label">Type Poste</label>
+                                                    <select name="typePoste" id="typePoste">
+                                                        <option value="Directeur">Directeur</option>
+                                                        <option value="Manager">Manager</option>
+                                                        <option value="Receptionniste">Receptionniste</option>
+                                                        <option value="ValetDeChambre">ValetDeChambre</option>
+                                                        <option value="Serveur">Serveur</option>
+                                                        <option value="Employe">Employe</option>
+                                                    </select>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -60,48 +76,67 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Numero Chambre</th>
-                                    <th>Disponibilité</th>
-                                    <th>Prix</th>
-                                    <th>Option</th>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Numéro Téléphone</th>
+                                    <th>Adresse</th>
+                                    <th>Poste</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ( $chambres as $chambre)
+                                @foreach ( $personnels as $personnel)
                                     <tr>
-                                        <th scope="row">{{ $chambre->id }}</th>
-                                        <td>{{ $chambre->numChambre }}</td>
-                                        <td>{{ $chambre->dispo }}</td>
-                                        <td>{{ $chambre->prix }}</td>
-                                        <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modifier{{$chambre->id}}">
+                                        <th scope="row">{{ $personnel->id }}</th>
+                                        <td>{{ $personnel->nom }}</td>
+                                        <td>{{ $personnel->prenom }}</td>
+                                        <td>{{ $personnel->numTel }}</td>
+                                        <td>{{ $personnel->adresse }}</td>
+                                        <td>{{ $personnel->typePoste }}</td>
+                                        <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modifier{{$personnel->id}}">
                                                 Modifier
                                             </button>
                                             <!-- Modal -->
-                                            <div class="modal fade" id="Modifier{{$chambre->id}}" tabindex="-1" role="dialog" aria-labelledby="Modifier{{$chambre->id}}" aria-hidden="true">
+                                            <div class="modal fade" id="Modifier{{$personnel->id}}" tabindex="-1" role="dialog" aria-labelledby="Modifier{{$personnel->id}}" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="Modifier{{$chambre->id}}" >Mofidier une chambre</h5>
+                                                            <h5 class="modal-title" id="Modifier{{$personnel->id}}" >Mofidier Personnel</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <form action="{{ route('chambre_update',$chambre->id)}}" method="POST">
+                                                        <form action="{{ route('personnel_update',$personnel->id)}}" method="POST">
                                                             <div class="modal-body">
                                                                 {!! csrf_field() !!}
                                                                 <div class="mb-3">
-                                                                    <label for="numChambre" class="form-label">Numéo Chambre</label>
-                                                                    <input type="text" class="form-control" id="numChambre" name="numChambre" value="{{$chambre->numChambre}}">
+                                                                    <label for="nom" class="form-label">Nom</label>
+                                                                    <input type="text" class="form-control" id="nom" name="nom" value="{{$personnel->nom}}">
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="dispo" class="form-label">Disponibilité</label>
-                                                                    <input type="text" class="form-control" id="dispo" name="dispo" value="{{$chambre->dispo}}">
+                                                                    <label for="prenom" class="form-label">Prénom</label>
+                                                                    <input type="text" class="form-control" id="prenom" name="prenom" value="{{$personnel->prenom}}">
                                                                 </div>
                                                                 <div class="mb-3">
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="prix" class="form-label">Prix</label>
-                                                                    <input type="text" class="form-control" id="prix" name="prix" value="{{$chambre->prix}}">
+                                                                    <label for="numTel" class="form-label">Numéro</label>
+                                                                    <input type="text" class="form-control" id="numTel" name="numTel" value="{{$personnel->numTel}}">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="adresse" class="form-label">Adresse</label>
+                                                                    <input type="text" class="form-control" id="adresse" name="adresse" value="{{$personnel->adresse}}">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="typePoste" class="form-label">Type Poste</label>
+                                                                    <select name="typePoste" id="typePoste">
+                                                                        <option value="{{$personnel->typePoste}}">{{$personnel->typePoste}}</option>
+                                                                        <option value="Directeur">Directeur</option>
+                                                                        <option value="Manager">Manager</option>
+                                                                        <option value="Receptionniste">Receptionniste</option>
+                                                                        <option value="ValetDeChambre">ValetDeChambre</option>
+                                                                        <option value="Serveur">Serveur</option>
+                                                                        <option value="Employe">Employe</option>
+                                                                    </select>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -122,19 +157,15 @@
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="Supprimer">Supprimer une chambre</h5>
+                                                            <h5 class="modal-title" id="Supprimer">Supprimer personnel</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        {{--<form action="{{ route('chambre_delete',$chambre->id)}}" method="DELETE">
-                                                        {!! csrf_field() !!}
-
-                                                        </form>--}}
                                                         <div class="modal-body">
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                <a href="{{ route('chambre_delete',$chambre->id)}}"><button type="submit"   class="btn btn-primary">Save changes</button></a>
+                                                                <a href="{{ route('personnel_delete',$personnel->id)}}"><button type="submit"   class="btn btn-primary">Save changes</button></a>
                                                             </div>
                                                         </div>
                                                     </div>
